@@ -1,14 +1,16 @@
 package com.example.videostore;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 
 public class HelloController {
     @FXML
-    private Label welcomeText;
+    private Button exitButton;
+
 
     @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+    public void exitClick() {
+        Platform.exit();
     }
 }
