@@ -1,5 +1,7 @@
 package com.example.videostore;
 
+
+
 public class Item extends Entity{
     private String title;
     private int numberOfCopies;
@@ -8,7 +10,8 @@ public class Item extends Entity{
     private LoanType loanType;
     private Genre genre;
 
-    public Item(String title, int numberOfCopies, double rentalFee, RentalType rentalType, LoanType loanType, Genre genre) {
+    public Item(String id,String title, int numberOfCopies, double rentalFee, RentalType rentalType, LoanType loanType, Genre genre) {
+        super(id);
         this.title = title;
         this.numberOfCopies = numberOfCopies;
         this.rentalFee = rentalFee;
@@ -17,7 +20,10 @@ public class Item extends Entity{
         this.genre = genre;
     }
 
-    public void setId(String id) {
+    public void setId(String id) throws ItemError {
+        if (idValid(id) == false) {
+            throw new ItemError("invalid Id");
+        }
         super.setId(id);
     }
 
@@ -41,7 +47,10 @@ public class Item extends Entity{
         this.numberOfCopies = numberOfCopies;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(String title) throws ItemError {
+        if (titleValid(title) == false) {
+            throw new ItemError("in valid title");
+        }
         this.title = title;
     }
 
@@ -104,5 +113,26 @@ public class Item extends Entity{
                 ", loanType=" + loanType +
                 ", genre=" + genre +
                 '}';
+    }
+
+    public boolean titleValid(String title) {
+        if (title == null || title.length() < 1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean rentalTypeValid(String rentalType) {
+        if (rentalType.equals("record")) {
+            return true;
+        }
+        if (rentalType.equals("dvd")) {
+            return true;
+        }
+        if (rentalType.equals("game")) {
+            return true;
+        }
+        return false;
     }
 }

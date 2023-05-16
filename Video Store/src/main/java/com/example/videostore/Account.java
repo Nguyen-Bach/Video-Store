@@ -1,6 +1,7 @@
 package com.example.videostore;
 
 import java.util.ArrayList;
+import java.util.SplittableRandom;
 
 public class Account extends Entity{
     private String name;
@@ -12,7 +13,8 @@ public class Account extends Entity{
     private int point = 0;
 
 
-    public Account(String name, String address, String phone, String username, String password, ArrayList<Item> itemRented, int point) {
+    public Account(String id, String name, String address, String phone, String username, String password, ArrayList<Item> itemRented, int point) {
+        super(id);
         this.name = name;
         this.address = address;
         this.phone = phone;
