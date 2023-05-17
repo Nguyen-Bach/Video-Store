@@ -28,15 +28,22 @@
                <children>
                   <Button fx:id="exitButton" layoutX="300.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#exitClick" text="exit" />
                   <Label layoutX="21.0" layoutY="169.0" text="Team 13" />
-                  <Button layoutX="454.0" layoutY="14.0" mnemonicParsing="false" text="login" />
+                  <Button fx:id="logInButton" layoutX="454.0" layoutY="14.0" mnemonicParsing="false" onAction="#logInClick" text="login" />
                </children>
             </Pane>
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                <children>
-                  <Label layoutX="250.0" layoutY="30.0" text="Username" />
-                  <Label layoutX="250.0" layoutY="80.0" text="Password" />
-                  <TextField layoutX="400.0" layoutY="26.0" promptText="Username" style="-fx-background-color: white;" />
-                  <PasswordField layoutX="400.0" layoutY="76.0" promptText="Password" style="-fx-background-color: white;" />
+                  <Label layoutX="249.0" layoutY="24.0" text="Username">
+                     <font>
+                        <Font size="20.0" />
+                     </font></Label>
+                  <Label layoutX="250.0" layoutY="73.0" text="Password">
+                     <font>
+                        <Font size="21.0" />
+                     </font></Label>
+                  <TextField fx:id="usernameField" layoutX="400.0" layoutY="26.0" promptText="Username" style="-fx-background-color: white;" />
+                  <PasswordField fx:id="passwordField" layoutX="400.0" layoutY="76.0" promptText="Password" style="-fx-background-color: white;" />
+                  <Label fx:id="wrongId" alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" layoutY="151.0" prefHeight="18.0" prefWidth="800.0" />
                </children>
             </Pane>
             <GridPane>

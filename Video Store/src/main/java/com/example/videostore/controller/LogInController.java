@@ -1,36 +1,40 @@
 package com.example.videostore.controller;
 
+import com.example.videostore.ZApplication;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
-import java.text.ParseException;
 import java.util.ResourceBundle;
 
 public class LogInController implements Initializable {
 
-
+    @FXML
+    private Button logInButton;
     @FXML
     private Button exitButton;
+    @FXML
+    private TextField usernameField;
+    @FXML
+    private TextField passwordField;
 
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
+    @FXML
+    private Label wrongId;
 
-    public void switchToScene2(ActionEvent event) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("scene2.fxml"));
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    public void logInClick() throws IOException {
+        if (usernameField.getText().toString().equals("admin") && passwordField.getText().toString().equals("admin")) {
+            FXMLLoader fxmlLoader = new FXMLLoader(ZApplication.class.getResource("AdminItem.fxml"));
+            Stage stage = (Stage) logInButton.getScene().getWindow();
+            stage.setScene(new Scene(fxmlLoader.load()));
+        } else {
+            wrongId.setText("Wrong username or password, please try again");
+        }
     }
 
     @FXML

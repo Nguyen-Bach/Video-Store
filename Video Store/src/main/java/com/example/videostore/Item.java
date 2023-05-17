@@ -1,6 +1,7 @@
 package com.example.videostore;
 
 
+import java.util.Calendar;
 
 public class Item extends Entity{
     private String title;
@@ -21,7 +22,7 @@ public class Item extends Entity{
     }
 
     public void setId(String id) throws ItemError {
-        if (idValid(id) == false) {
+        if (idValidItem(id) == false) {
             throw new ItemError("invalid Id");
         }
         super.setId(id);
@@ -36,7 +37,7 @@ public class Item extends Entity{
     }
 
     public enum Genre {
-        action, drama, comedy, horror
+        action, drama, comedy, horror, noGenre
     }
 
     public void setRentalFee(double rentalFee) {
@@ -100,6 +101,7 @@ public class Item extends Entity{
             case action -> "Action";
             case comedy -> "Comedy";
             case horror -> "Horror";
+            case noGenre -> "";
         };
     }
 
@@ -134,5 +136,13 @@ public class Item extends Entity{
             return true;
         }
         return false;
+    }
+    public boolean idValidItem(String id) {
+        if (id.length() != 9) {
+            return false;
+        } else if (!id.matches("I\\d{3}-\\d{4}")) {
+            return false;
+        }
+        return true;
     }
 }

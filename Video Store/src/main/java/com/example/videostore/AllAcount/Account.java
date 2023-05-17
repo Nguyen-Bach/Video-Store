@@ -1,17 +1,28 @@
-package com.example.videostore;
+package com.example.videostore.AllAcount;
+
+import com.example.videostore.Entity;
+import com.example.videostore.Item;
+import com.example.videostore.ItemError;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.SplittableRandom;
 
-public class Account extends Entity{
+public class Account extends Entity {
     private String name;
     private String address;
     private String phone;
     private String username;
     private String password;
+    private String role;
     private ArrayList<Item> itemRented = new ArrayList<Item>();
     private int point = 0;
 
+    public Account(String id, String username, String password) {
+        super(id);
+        this.username = username;
+        this.password = password;
+    }
 
     public Account(String id, String name, String address, String phone, String username, String password, ArrayList<Item> itemRented, int point) {
         super(id);
@@ -22,6 +33,13 @@ public class Account extends Entity{
         this.password = password;
         this.itemRented = itemRented;
         this.point = point;
+    }
+
+    public void setId(String id) throws ItemError {
+        if (!idValidAccount(id)) {
+            throw new ItemError("invalid Id");
+        }
+        super.setId(id);
     }
 
     public void setName(String name) {
@@ -46,6 +64,10 @@ public class Account extends Entity{
 
     public void setItemRented(ArrayList<Item> itemRented) {
         this.itemRented = itemRented;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public void setPoint(int point) {
@@ -76,7 +98,34 @@ public class Account extends Entity{
         return itemRented;
     }
 
+    public String getRole() {
+        return role;
+    }
+
     public int getPoint() {
         return point;
+    }
+
+
+
+    public boolean idValidAccount(String id) {
+        if (!id.matches("C\\d{3}")) {
+            return false;
+        } else {
+            return true;
+        }
+    };
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", itemRented=" + itemRented +
+                ", point=" + point +
+                '}';
     }
 }
