@@ -1,7 +1,7 @@
 package com.example.videostore;
 
 
-import java.util.Calendar;
+import com.example.videostore.Utility.ItemUtility;
 
 public class Item extends Entity{
     private String title;
@@ -11,7 +11,7 @@ public class Item extends Entity{
     private LoanType loanType;
     private Genre genre;
 
-    public Item(String id,String title, int numberOfCopies, double rentalFee, RentalType rentalType, LoanType loanType, Genre genre) {
+    public Item(String id,String title,RentalType rentalType, LoanType loanType, int numberOfCopies, double rentalFee, Genre genre) {
         super(id);
         this.title = title;
         this.numberOfCopies = numberOfCopies;
@@ -55,16 +55,72 @@ public class Item extends Entity{
         this.title = title;
     }
 
-    public void setRentalType(RentalType rentalType) {
-        this.rentalType = rentalType;
+    public boolean setRentalType(String rentalType) {
+        RentalType rental = ItemUtility.convertRentalType(rentalType);
+
+        switch (rental) {
+            case dvd -> {
+                this.rentalType = RentalType.dvd;
+                return true;
+            }
+            case game -> {
+                this.rentalType = RentalType.game;
+                return true;
+            }
+            case record -> {
+                this.rentalType = RentalType.record;
+                return true;
+            }
+        }
+        return false;
     }
 
-    public void setLoanType(LoanType loanType) {
-        this.loanType = loanType;
+    public boolean setLoanType(String loanType) {
+        LoanType loan = ItemUtility.convertLoanType(loanType);
+
+        switch (loan) {
+            case OneWeek -> {
+                this.loanType = LoanType.OneWeek;
+                return true;
+            }
+            case twoDays -> {
+                this.loanType = LoanType.twoDays;
+                return true;
+            }
+        }
+        return false;
     }
 
-    public void setGenre(Genre genre) {
-        this.genre = genre;
+    public boolean setGenre(String genre) {
+        Genre genreType = ItemUtility.convertGenre(genre);
+
+        switch (genreType) {
+            case drama -> {
+                this.genre = Genre.drama;
+                return true;
+            }
+            case action -> {
+                this.genre = Genre.action;
+                return true;
+            }
+            case horror -> {
+                this.genre = Genre.horror;
+                return true;
+            }
+            case comedy -> {
+                this.genre = Genre.comedy;
+                return true;
+            }
+            case noGenre -> {
+                if (rentalType == RentalType.game) {
+                    this.genre = Genre.noGenre;
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+        return false;
     }
 
     // ///////////////////////////////////////
@@ -123,19 +179,6 @@ public class Item extends Entity{
         } else {
             return true;
         }
-    }
-
-    public boolean rentalTypeValid(String rentalType) {
-        if (rentalType.equals("record")) {
-            return true;
-        }
-        if (rentalType.equals("dvd")) {
-            return true;
-        }
-        if (rentalType.equals("game")) {
-            return true;
-        }
-        return false;
     }
     public boolean idValidItem(String id) {
         if (id.length() != 9) {

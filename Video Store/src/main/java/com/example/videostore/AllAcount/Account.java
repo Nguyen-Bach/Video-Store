@@ -14,7 +14,7 @@ public class Account extends Entity {
     private String phone;
     private String username;
     private String password;
-    private String role;
+    private String type;
     private ArrayList<Item> itemRented = new ArrayList<Item>();
     private int point = 0;
 
@@ -22,17 +22,16 @@ public class Account extends Entity {
         super(id);
         this.username = username;
         this.password = password;
+        this.type = "Guest";
     }
 
-    public Account(String id, String name, String address, String phone, String username, String password, ArrayList<Item> itemRented, int point) {
-        super(id);
+    public Account(String id, String username, String password, String address, String phone, String name, String type, int point) {
+        this(id, username, password);
         this.name = name;
         this.address = address;
         this.phone = phone;
-        this.username = username;
-        this.password = password;
-        this.itemRented = itemRented;
         this.point = point;
+        this.type = type;
     }
 
     public void setId(String id) throws ItemError {
@@ -66,8 +65,8 @@ public class Account extends Entity {
         this.itemRented = itemRented;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public void setPoint(int point) {
@@ -98,8 +97,8 @@ public class Account extends Entity {
         return itemRented;
     }
 
-    public String getRole() {
-        return role;
+    public String getType() {
+        return type;
     }
 
     public int getPoint() {
