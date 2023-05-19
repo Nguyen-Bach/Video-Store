@@ -2,16 +2,22 @@ package com.example.videostore.controller;
 
 import com.example.videostore.ZApplication;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import com.example.videostore.AllAccount.Account;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class LogInController implements Initializable {
 
@@ -23,11 +29,10 @@ public class LogInController implements Initializable {
     private TextField usernameField;
     @FXML
     private TextField passwordField;
-
     @FXML
     private Label wrongId;
 
-    public void logInClick() throws IOException {
+    public void logInClick2() throws IOException {
         if (usernameField.getText().toString().equals("admin") && passwordField.getText().toString().equals("admin")) {
             FXMLLoader fxmlLoader = new FXMLLoader(ZApplication.class.getResource("AdminItem.fxml"));
             Stage stage = (Stage) logInButton.getScene().getWindow();
@@ -36,6 +41,43 @@ public class LogInController implements Initializable {
             wrongId.setText("Wrong username or password, please try again");
         }
     }
+
+    public void logInClick() throws IOException {
+        String usernameInput = usernameField.getText().toString();
+        String passwordInput = passwordField.getText().toString();
+        boolean valid = false;
+
+        try {
+            Scanner fileScanner = new Scanner(new File("src/main/resources/com/example/videostore/customers.txt"));
+            while (fileScanner.hasNext()) {
+                String line = fileScanner.nextLine();
+                StringTokenizer tokenizer = new StringTokenizer(line, ",");
+                String id = tokenizer.nextToken();
+                String name = tokenizer.nextToken();
+                String address = tokenizer.nextToken();
+                String phone = tokenizer.nextToken();
+                String NULL = tokenizer.nextToken();
+                String role = tokenizer.nextToken();
+                String username = tokenizer.nextToken();
+                String password = tokenizer.nextToken();
+
+                if (usernameInput.equals(username) && passwordInput.equals(password)) {
+                    valid = true;
+                }
+            }
+            if (valid || (usernameField.getText().toString().equals("admin") && passwordField.getText().toString().equals("admin"))) {
+                FXMLLoader fxmlLoader = new FXMLLoader(ZApplication.class.getResource("AdminItem.fxml"));
+                Stage stage = (Stage) logInButton.getScene().getWindow();
+                stage.setScene(new Scene(fxmlLoader.load()));
+            } else {
+                wrongId.setText("Wrong username or password, please try again");
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 
     @FXML
     public void exitClick() {

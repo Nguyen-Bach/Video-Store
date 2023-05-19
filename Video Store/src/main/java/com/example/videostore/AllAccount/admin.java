@@ -1,4 +1,4 @@
-package com.example.videostore.AllAcount;
+package com.example.videostore.AllAccount;
 
 public class admin {
     private final String adminUsername = "admin";

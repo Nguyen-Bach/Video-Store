@@ -1,12 +1,10 @@
-package com.example.videostore.AllAcount;
+package com.example.videostore.AllAccount;
 
 import com.example.videostore.Entity;
 import com.example.videostore.Item;
 import com.example.videostore.ItemError;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.SplittableRandom;
 
 public class Account extends Entity {
     private String name;
@@ -127,4 +125,6 @@ public class Account extends Entity {
                 ", point=" + point +
                 '}';
     }
+
+
 }
