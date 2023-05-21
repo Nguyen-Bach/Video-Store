@@ -1,10 +1,10 @@
 package com.example.videostore.Utility;
 
-import com.example.videostore.AllAccount.Account;
+import com.example.videostore.AllAccount.Customer;
 
 public class AccountUtility {
 
-    public Account convert(String string) {
+    public Customer convert(String string) {
         String list[] = string.split(",");
 
         String id = list[0];
@@ -15,6 +15,6 @@ public class AccountUtility {
         String username = list[6];
         String password = list[7];
 
-        return new Account(id, username, password, address, phone, name, type, 0);
+        return new Customer(id, username, password, address, phone, name, type, 0);
         }
 }

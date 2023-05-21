@@ -1,9 +1,15 @@
 package com.example.videostore;
 
 
-import com.example.videostore.Utility.ItemUtility;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 
-public class Item extends Entity{
+public class Item {
+    private String id;
     private String title;
     private int numberOfCopies;
     private double rentalFee;
@@ -11,8 +17,10 @@ public class Item extends Entity{
     private LoanType loanType;
     private Genre genre;
 
+    private static ArrayList<Item> items = new ArrayList<>() {};
+
     public Item(String id,String title,RentalType rentalType, LoanType loanType, int numberOfCopies, double rentalFee, Genre genre) {
-        super(id);
+        this.id = id;
         this.title = title;
         this.numberOfCopies = numberOfCopies;
         this.rentalFee = rentalFee;
@@ -22,10 +30,10 @@ public class Item extends Entity{
     }
 
     public void setId(String id) throws ItemError {
-        if (idValidItem(id) == false) {
+        if (isValidId(id) == false) {
             throw new ItemError("invalid Id");
         }
-        super.setId(id);
+        this.id = id;
     }
 
     public enum RentalType {
@@ -56,7 +64,7 @@ public class Item extends Entity{
     }
 
     public boolean setRentalType(String rentalType) {
-        RentalType rental = ItemUtility.convertRentalType(rentalType);
+        RentalType rental = convertRentalType(rentalType);
 
         switch (rental) {
             case dvd -> {
@@ -76,7 +84,7 @@ public class Item extends Entity{
     }
 
     public boolean setLoanType(String loanType) {
-        LoanType loan = ItemUtility.convertLoanType(loanType);
+        LoanType loan = convertLoanType(loanType);
 
         switch (loan) {
             case OneWeek -> {
@@ -92,7 +100,7 @@ public class Item extends Entity{
     }
 
     public boolean setGenre(String genre) {
-        Genre genreType = ItemUtility.convertGenre(genre);
+        Genre genreType = convertGenre(genre);
 
         switch (genreType) {
             case drama -> {
@@ -161,10 +169,99 @@ public class Item extends Entity{
         };
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public static ArrayList<Item> initializeItems() throws FileNotFoundException {
+        items.clear();
+        Scanner scanFile = new Scanner(new File("src/main/resources/com/example/videostore/items.txt"));
+        try {
+            while (scanFile.hasNext()) {
+                List<String> account = Arrays.asList(scanFile.nextLine().split(","));
+
+                String id = account.get(0);
+                String title = account.get(1);
+
+                String stringRentalType = account.get(2);
+                Item.RentalType rentalType = convertRentalType(stringRentalType);
+
+                String stringLoanType = account.get(3);
+                Item.LoanType loanType = convertLoanType(stringLoanType);
+
+                int numOfCopies = Integer.parseInt(account.get(4));
+                double rentalFee = Double.parseDouble(account.get(5));
+
+                String stringGenre = account.get(6);
+                Item.Genre genre = convertGenre(stringGenre);
+
+                items.add(new Item(id, title, rentalType, loanType, numOfCopies, rentalFee, genre));
+
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return items;
+    }
+
+    public void increaseNumberOfCopies(int n) throws ItemError{
+        if (n <= 0) {
+            throw new ItemError("invalid number");
+        }
+        this.numberOfCopies += n;
+    }
+    public void decreaseNumberOfCopies() throws ItemError {
+        if (this.numberOfCopies == 0) {
+            throw new ItemError("there is no stock for this item");
+        }
+        this.numberOfCopies--;
+    }
+
+    public static Item.RentalType convertRentalType(String rentalType) {
+        if (rentalType.equalsIgnoreCase("record")) {
+            return Item.RentalType.record;
+        }
+        if (rentalType.equalsIgnoreCase("dvd")) {
+            return Item.RentalType.dvd;
+        }
+        if (rentalType.equalsIgnoreCase("game")) {
+            return Item.RentalType.game;
+        }
+        return null;
+    }
+    public static Item.LoanType convertLoanType(String loanType) {
+        if (loanType.equalsIgnoreCase("1-week")) {
+            return Item.LoanType.OneWeek;
+        }
+        if (loanType.equalsIgnoreCase("2-day")) {
+            return Item.LoanType.twoDays;
+        }
+        return null;
+    }
+    public static Item.Genre convertGenre(String genre) {
+        if (genre.equalsIgnoreCase("action")) {
+            return Item.Genre.action;
+        }
+        if (genre.equalsIgnoreCase("horror")) {
+            return Item.Genre.horror;
+        }
+        if (genre.equalsIgnoreCase("comedy")) {
+            return Item.Genre.comedy;
+        }
+        if (genre.equalsIgnoreCase("drama")) {
+            return Item.Genre.drama;
+        }
+        if (genre.equalsIgnoreCase("")) {
+            return Item.Genre.noGenre;
+        }
+        return null;
+    }
+
     @Override
     public String toString() {
         return "Item{" +
-                "title='" + title + '\'' +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
                 ", numberOfCopies=" + numberOfCopies +
                 ", rentalFee=" + rentalFee +
                 ", rentalType=" + rentalType +
@@ -180,7 +277,7 @@ public class Item extends Entity{
             return true;
         }
     }
-    public boolean idValidItem(String id) {
+    public boolean isValidId(String id) {
         if (id.length() != 9) {
             return false;
         } else if (!id.matches("I\\d{3}-\\d{4}")) {

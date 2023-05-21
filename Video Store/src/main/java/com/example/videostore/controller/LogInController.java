@@ -1,15 +1,14 @@
 package com.example.videostore.controller;
 
+import com.example.videostore.AllAccount.admin;
 import com.example.videostore.ZApplication;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import com.example.videostore.AllAccount.Account;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -65,12 +64,16 @@ public class LogInController implements Initializable {
                     valid = true;
                 }
             }
-            if (valid || (usernameField.getText().toString().equals("admin") && passwordField.getText().toString().equals("admin"))) {
+            if (valid) {
+                FXMLLoader fxmlLoader = new FXMLLoader(ZApplication.class.getResource("CustomerItem.fxml"));
+                Stage stage = (Stage) logInButton.getScene().getWindow();
+                stage.setScene(new Scene(fxmlLoader.load()));
+            } else  if (usernameField.getText().toString().equals("admin") && passwordField.getText().toString().equals("admin")){
                 FXMLLoader fxmlLoader = new FXMLLoader(ZApplication.class.getResource("AdminItem.fxml"));
                 Stage stage = (Stage) logInButton.getScene().getWindow();
                 stage.setScene(new Scene(fxmlLoader.load()));
             } else {
-                wrongId.setText("Wrong username or password, please try again");
+                wrongId.setText("wrong username or password");
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);

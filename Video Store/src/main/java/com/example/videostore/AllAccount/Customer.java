@@ -1,12 +1,17 @@
 package com.example.videostore.AllAccount;
 
-import com.example.videostore.Entity;
 import com.example.videostore.Item;
 import com.example.videostore.ItemError;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 
-public class Account extends Entity {
+public class Customer {
+    private String id;
     private String name;
     private String address;
     private String phone;
@@ -14,16 +19,17 @@ public class Account extends Entity {
     private String password;
     private String type;
     private ArrayList<Item> itemRented = new ArrayList<Item>();
+    private static ArrayList<Customer> customers = new ArrayList<>();
     private int point = 0;
 
-    public Account(String id, String username, String password) {
-        super(id);
+    public Customer(String id, String username, String password) {
+        this.id = id;
         this.username = username;
         this.password = password;
         this.type = "Guest";
     }
 
-    public Account(String id, String username, String password, String address, String phone, String name, String type, int point) {
+    public Customer(String id, String username, String password, String address, String phone, String name, String type, int point) {
         this(id, username, password);
         this.name = name;
         this.address = address;
@@ -36,7 +42,7 @@ public class Account extends Entity {
         if (!idValidAccount(id)) {
             throw new ItemError("invalid Id");
         }
-        super.setId(id);
+        this.id = id;
     }
 
     public void setName(String name) {
@@ -103,7 +109,9 @@ public class Account extends Entity {
         return point;
     }
 
-
+    public String getId() {
+        return id;
+    }
 
     public boolean idValidAccount(String id) {
         if (!id.matches("C\\d{3}")) {
@@ -111,20 +119,45 @@ public class Account extends Entity {
         } else {
             return true;
         }
-    };
+    }
+
+    public static void initializeCustomer() throws FileNotFoundException {
+        customers.clear();
+        Scanner scanFile = new Scanner(new File("src/main/resources/com/example/videostore/customers.txt"));
+        try {
+            while (scanFile.hasNext()) {
+                List<String> account = Arrays.asList(scanFile.nextLine().split(","));
+
+                String id = account.get(0);
+                String username = account.get(6);
+                String password = account.get(7);
+                String address = account.get(2);
+                String phone = account.get(3);
+                String name = account.get(1);
+                String type = account.get(5);
+
+                customers.add(new Customer(id, username, password, address, phone, name, type, 0));
+            }
+        } catch (Exception e) {
+            System.out.println("no file found");
+        }
+    }
+
+
+
 
     @Override
     public String toString() {
         return "Account{" +
-                "name='" + name + '\'' +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", type='" + type + '\'' +
                 ", itemRented=" + itemRented +
                 ", point=" + point +
                 '}';
     }
-
-
 }
