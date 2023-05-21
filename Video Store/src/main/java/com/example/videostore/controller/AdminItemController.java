@@ -4,6 +4,7 @@ import com.example.videostore.Item;
 import com.example.videostore.ZApplication;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -41,30 +42,26 @@ public class AdminItemController implements Initializable {
     @FXML
     private TableColumn<Item, Double> rentalFeeColumn= new TableColumn<>("Fee");
     @FXML
-    private TableColumn<Item, String> genre = new TableColumn<>("Genre");
+    private TableColumn<Item, Item.Genre> genreColumn = new TableColumn<>("Genre");
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            itemDisplay();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 
     private void itemDisplay() throws FileNotFoundException {
 
         idColumn.setCellValueFactory(new PropertyValueFactory<>("ID"));
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("Title"));
         rentalTypeColumn.setCellValueFactory(new PropertyValueFactory<>("Type"));
-        loanTypeColumn.setCellValueFactory(new PropertyValueFactory<>("Fee"));
-        numberOfCopiesColumn.setCellValueFactory(new PropertyValueFactory<>("Copies  "));
-        rentalFeeColumn.setCellValueFactory(new PropertyValueFactory<>("rentalType"));
-        genre.setCellValueFactory(new PropertyValueFactory<>("loanType"));
+        loanTypeColumn.setCellValueFactory(new PropertyValueFactory<>("Loan Type"));
+        numberOfCopiesColumn.setCellValueFactory(new PropertyValueFactory<>("Copies"));
+        rentalFeeColumn.setCellValueFactory(new PropertyValueFactory<>("Fee"));
+        genreColumn.setCellValueFactory(new PropertyValueFactory<>("Genre"));
 
 
-        itemTableView.setItems((ObservableList<Item>) Item.initializeItems());
+        itemTableView.setItems(FXCollections.observableArrayList(Item.initializeItems()));
+        itemTableView.getColumns().addAll(idColumn, titleColumn, rentalTypeColumn, loanTypeColumn,
+                numberOfCopiesColumn, rentalFeeColumn, genreColumn);
     }
+
 
 
 
@@ -78,6 +75,15 @@ public class AdminItemController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(ZApplication.class.getResource("LogInScreen.fxml"));
         Stage stage = (Stage) logOutButton.getScene().getWindow();
         stage.setScene(new Scene(fxmlLoader.load()));
+    }
+
+    @Override
+    public void initialize(URL URL, ResourceBundle resourceBundle) {
+        try {
+            itemDisplay();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 

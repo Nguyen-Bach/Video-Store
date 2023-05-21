@@ -3,6 +3,7 @@ package com.example.videostore;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -45,7 +46,7 @@ public class Item {
     }
 
     public enum Genre {
-        action, drama, comedy, horror, noGenre
+        action, drama, comedy, horror, NG
     }
 
     public void setRentalFee(double rentalFee) {
@@ -58,7 +59,7 @@ public class Item {
 
     public void setTitle(String title) throws ItemError {
         if (titleValid(title) == false) {
-            throw new ItemError("in valid title");
+            throw new ItemError("invalid title");
         }
         this.title = title;
     }
@@ -119,9 +120,9 @@ public class Item {
                 this.genre = Genre.comedy;
                 return true;
             }
-            case noGenre -> {
+            case NG -> {
                 if (rentalType == RentalType.game) {
-                    this.genre = Genre.noGenre;
+                    this.genre = Genre.NG;
                     return true;
                 } else {
                     return false;
@@ -165,7 +166,7 @@ public class Item {
             case action -> "Action";
             case comedy -> "Comedy";
             case horror -> "Horror";
-            case noGenre -> "";
+            case NG -> "NG";
         };
     }
 
@@ -251,8 +252,8 @@ public class Item {
         if (genre.equalsIgnoreCase("drama")) {
             return Item.Genre.drama;
         }
-        if (genre.equalsIgnoreCase("")) {
-            return Item.Genre.noGenre;
+        if (genre.equalsIgnoreCase("NG")) {
+            return Item.Genre.NG;
         }
         return null;
     }

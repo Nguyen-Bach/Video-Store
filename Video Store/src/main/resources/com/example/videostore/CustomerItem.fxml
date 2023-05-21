@@ -49,7 +49,7 @@
                   <TextField layoutX="98.0" layoutY="13.0" prefHeight="25.0" prefWidth="211.0" />
                </children>
             </Pane>
-            <TableView fx:id="itemTableView" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
+            <TableView prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
          </children>
       </GridPane>
    </children>

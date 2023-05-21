@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.security.cert.X509Certificate;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.StringTokenizer;
@@ -30,16 +31,6 @@ public class LogInController implements Initializable {
     private TextField passwordField;
     @FXML
     private Label wrongId;
-
-    public void logInClick2() throws IOException {
-        if (usernameField.getText().toString().equals("admin") && passwordField.getText().toString().equals("admin")) {
-            FXMLLoader fxmlLoader = new FXMLLoader(ZApplication.class.getResource("AdminItem.fxml"));
-            Stage stage = (Stage) logInButton.getScene().getWindow();
-            stage.setScene(new Scene(fxmlLoader.load()));
-        } else {
-            wrongId.setText("Wrong username or password, please try again");
-        }
-    }
 
     public void logInClick() throws IOException {
         String usernameInput = usernameField.getText().toString();
@@ -79,7 +70,6 @@ public class LogInController implements Initializable {
             throw new RuntimeException(e);
         }
     }
-
 
 
     @FXML

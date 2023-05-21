@@ -2,12 +2,15 @@ package com.example.videostore;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class ZApplication extends Application {
     @Override
@@ -40,4 +43,6 @@ public class ZApplication extends Application {
     public static void main(String[] args) {
         launch();
     }
+
+
 }

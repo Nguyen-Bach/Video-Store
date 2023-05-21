@@ -43,7 +43,7 @@
                 <RowConstraints maxHeight="405.3332977294922" minHeight="10.0" prefHeight="405.3332977294922" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TableView prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
+                  <TableView fx:id="itemTableView" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
                   <Pane prefHeight="47.0" prefWidth="801.0">
                      <children>
                         <TextField layoutX="88.0" layoutY="11.0" prefHeight="25.0" prefWidth="224.0" />
