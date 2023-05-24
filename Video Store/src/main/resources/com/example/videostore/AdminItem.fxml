@@ -11,51 +11,62 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.videostore.controller.AdminItemController">
+<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.videostore.controller.AdminItemController">
    <children>
-      <HBox layoutY="-3.0" prefHeight="153.0" prefWidth="800.0">
+      <HBox layoutY="-3.0" prefHeight="153.0" prefWidth="1000.0">
          <children>
-            <Pane prefHeight="153.0" prefWidth="799.0" style="-fx-background-color: lightblue;">
+            <Pane prefHeight="153.0" prefWidth="999.0" style="-fx-background-color: lightblue;">
                <children>
-                  <Button fx:id="customerButton" layoutX="366.0" layoutY="77.0" mnemonicParsing="false" onAction="#customerButtonClick" text="Customer" />
-                  <Button layoutX="510.0" layoutY="77.0" mnemonicParsing="false" text="Items" />
+                  <Button fx:id="customerButton" layoutX="370.0" layoutY="70.0" mnemonicParsing="false" onAction="#customerButtonClick" text="Customer">
+                     <font>
+                        <Font size="21.0" />
+                     </font></Button>
+                  <Button layoutX="630.0" layoutY="70.0" mnemonicParsing="false" text="Items">
+                     <font>
+                        <Font size="21.0" />
+                     </font></Button>
                   <Label layoutX="34.0" layoutY="48.0" text="Item List" textAlignment="CENTER">
                      <font>
                         <Font size="40.0" />
                      </font>
                   </Label>
-                  <Button fx:id="logOutButton" layoutX="722.0" layoutY="14.0" mnemonicParsing="false" onAction="#logOut" text="Log out" />
+                  <Button fx:id="logOutButton" layoutX="930.0" layoutY="15.0" mnemonicParsing="false" onAction="#logOut" text="Log out" />
                </children>
             </Pane>
          </children>
       </HBox>
-      <StackPane layoutY="150.0" prefHeight="451.0" prefWidth="800.0">
+      <GridPane fx:id="itemPane" layoutX="-2.0" layoutY="150.0" prefHeight="651.0" prefWidth="1000.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="220.66668701171875" minHeight="10.0" prefHeight="33.333348592122405" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="593.3333180745442" minHeight="10.0" prefHeight="593.3333180745442" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <GridPane fx:id="itemPane">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints maxHeight="220.66668701171875" minHeight="10.0" prefHeight="46.66670227050781" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="405.3332977294922" minHeight="10.0" prefHeight="405.3332977294922" vgrow="SOMETIMES" />
-              </rowConstraints>
+            <TableView fx:id="itemTableView" prefHeight="596.0" prefWidth="1000.0" GridPane.rowIndex="1" />
+            <Pane prefHeight="47.0" prefWidth="801.0">
                <children>
-                  <TableView fx:id="itemTableView" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
-                  <Pane prefHeight="47.0" prefWidth="801.0">
-                     <children>
-                        <TextField layoutX="88.0" layoutY="11.0" prefHeight="25.0" prefWidth="224.0" />
-                        <ComboBox layoutX="430.0" layoutY="11.0" prefHeight="25.0" prefWidth="88.0" promptText="Sort by" />
-                        <ComboBox layoutX="326.0" layoutY="11.0" prefHeight="25.0" prefWidth="95.0" promptText="Search by" />
-                        <Button layoutX="526.0" layoutY="11.0" mnemonicParsing="false" text="Search" />
-                        <Button contentDisplay="CENTER" layoutX="592.0" layoutY="11.0" mnemonicParsing="false" text="Add item" />
-                     </children>
-                  </Pane>
+                  <TextField layoutX="88.0" layoutY="11.0" prefHeight="25.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font></TextField>
+                  <ComboBox layoutX="330.0" layoutY="12.0" prefHeight="38.0" prefWidth="120.0" promptText="Search by" />
+                  <Button layoutX="480.0" layoutY="12.0" mnemonicParsing="false" text="Search">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="addItemButton" contentDisplay="CENTER" layoutX="860.0" layoutY="12.0" mnemonicParsing="false" onAction="#addItemButtonClick" prefHeight="38.0" prefWidth="135.0" text="Add item">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Button>
                </children>
-            </GridPane>
+            </Pane>
          </children>
-      </StackPane>
+      </GridPane>
    </children>
 </AnchorPane>

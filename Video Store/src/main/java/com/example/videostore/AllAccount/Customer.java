@@ -22,15 +22,11 @@ public class Customer {
     private static ArrayList<Customer> customers = new ArrayList<>();
     private int point = 0;
 
-    public Customer(String id, String username, String password) {
+
+    public Customer(String id, String username, String password, String address, String phone, String name, String type, int point) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.type = "Guest";
-    }
-
-    public Customer(String id, String username, String password, String address, String phone, String name, String type, int point) {
-        this(id, username, password);
         this.name = name;
         this.address = address;
         this.phone = phone;
@@ -113,7 +109,15 @@ public class Customer {
         return id;
     }
 
-    public boolean idValidAccount(String id) {
+    public static ArrayList<Customer> getArrayCustomers() {
+        return customers;
+    }
+
+    public static void setCustomers(ArrayList<Customer> customers) {
+        Customer.customers = customers;
+    }
+
+    public static boolean idValidAccount(String id) {
         if (!id.matches("C\\d{3}")) {
             return false;
         } else {
@@ -121,7 +125,7 @@ public class Customer {
         }
     }
 
-    public static void initializeCustomer() throws FileNotFoundException {
+    public static ArrayList<Customer> initializeCustomer() throws FileNotFoundException {
         customers.clear();
         Scanner scanFile = new Scanner(new File("src/main/resources/com/example/videostore/customers.txt"));
         try {
@@ -141,6 +145,7 @@ public class Customer {
         } catch (Exception e) {
             System.out.println("no file found");
         }
+        return customers;
     }
 
 

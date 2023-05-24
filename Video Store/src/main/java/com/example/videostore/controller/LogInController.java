@@ -15,9 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.security.cert.X509Certificate;
-import java.util.ResourceBundle;
-import java.util.Scanner;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class LogInController implements Initializable {
 
@@ -40,16 +38,9 @@ public class LogInController implements Initializable {
         try {
             Scanner fileScanner = new Scanner(new File("src/main/resources/com/example/videostore/customers.txt"));
             while (fileScanner.hasNext()) {
-                String line = fileScanner.nextLine();
-                StringTokenizer tokenizer = new StringTokenizer(line, ",");
-                String id = tokenizer.nextToken();
-                String name = tokenizer.nextToken();
-                String address = tokenizer.nextToken();
-                String phone = tokenizer.nextToken();
-                String NULL = tokenizer.nextToken();
-                String role = tokenizer.nextToken();
-                String username = tokenizer.nextToken();
-                String password = tokenizer.nextToken();
+                List<String> account = Arrays.asList(fileScanner.nextLine().split(","));
+                String username = account.get(6);
+                String password = account.get(7);
 
                 if (usernameInput.equals(username) && passwordInput.equals(password)) {
                     valid = true;

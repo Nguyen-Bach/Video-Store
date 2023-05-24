@@ -28,9 +28,11 @@ public class AdminItemController implements Initializable {
     @FXML
     private Button customerButton;
     @FXML
+    private Button addItemButton;
+    @FXML
     private TableView<Item> itemTableView = new TableView<>();
     @FXML
-    private TableColumn<Item, String> idColumn= new TableColumn<>("ID");
+    private TableColumn<Item, String> idColumn= new TableColumn<>("id");
     @FXML
     private TableColumn<Item, String> titleColumn= new TableColumn<>("Title");
     @FXML
@@ -48,18 +50,25 @@ public class AdminItemController implements Initializable {
 
     private void itemDisplay() throws FileNotFoundException {
 
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("ID"));
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("Title"));
-        rentalTypeColumn.setCellValueFactory(new PropertyValueFactory<>("Type"));
-        loanTypeColumn.setCellValueFactory(new PropertyValueFactory<>("Loan Type"));
-        numberOfCopiesColumn.setCellValueFactory(new PropertyValueFactory<>("Copies"));
-        rentalFeeColumn.setCellValueFactory(new PropertyValueFactory<>("Fee"));
+        rentalTypeColumn.setCellValueFactory(new PropertyValueFactory<>("rentalType"));
+        loanTypeColumn.setCellValueFactory(new PropertyValueFactory<>("loanType"));
+        numberOfCopiesColumn.setCellValueFactory(new PropertyValueFactory<>("numberOfCopies"));
+        rentalFeeColumn.setCellValueFactory(new PropertyValueFactory<>("rentalFee"));
         genreColumn.setCellValueFactory(new PropertyValueFactory<>("Genre"));
 
 
         itemTableView.setItems(FXCollections.observableArrayList(Item.initializeItems()));
         itemTableView.getColumns().addAll(idColumn, titleColumn, rentalTypeColumn, loanTypeColumn,
                 numberOfCopiesColumn, rentalFeeColumn, genreColumn);
+    }
+
+    @FXML
+    private void addItemButtonClick() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(ZApplication.class.getResource("AddItem.fxml"));
+        Stage stage = (Stage) addItemButton.getScene().getWindow();
+        stage.setScene(new Scene(fxmlLoader.load()));
     }
 
 

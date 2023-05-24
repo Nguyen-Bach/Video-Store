@@ -4,10 +4,7 @@ package com.example.videostore;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Item {
     private String id;
@@ -23,10 +20,10 @@ public class Item {
     public Item(String id,String title,RentalType rentalType, LoanType loanType, int numberOfCopies, double rentalFee, Genre genre) {
         this.id = id;
         this.title = title;
-        this.numberOfCopies = numberOfCopies;
-        this.rentalFee = rentalFee;
         this.rentalType = rentalType;
         this.loanType = loanType;
+        this.numberOfCopies = numberOfCopies;
+        this.rentalFee = rentalFee;
         this.genre = genre;
     }
 
@@ -174,12 +171,19 @@ public class Item {
         return id;
     }
 
+    public static ArrayList<Item> getArrayItems() {
+        return items;
+    }
+
+
     public static ArrayList<Item> initializeItems() throws FileNotFoundException {
         items.clear();
         Scanner scanFile = new Scanner(new File("src/main/resources/com/example/videostore/items.txt"));
         try {
             while (scanFile.hasNext()) {
+
                 List<String> account = Arrays.asList(scanFile.nextLine().split(","));
+
 
                 String id = account.get(0);
                 String title = account.get(1);
@@ -219,13 +223,13 @@ public class Item {
     }
 
     public static Item.RentalType convertRentalType(String rentalType) {
-        if (rentalType.equalsIgnoreCase("record")) {
+        if (rentalType.equalsIgnoreCase("Record")) {
             return Item.RentalType.record;
         }
-        if (rentalType.equalsIgnoreCase("dvd")) {
+        if (rentalType.equalsIgnoreCase("DVD")) {
             return Item.RentalType.dvd;
         }
-        if (rentalType.equalsIgnoreCase("game")) {
+        if (rentalType.equalsIgnoreCase("Game")) {
             return Item.RentalType.game;
         }
         return null;
@@ -278,12 +282,43 @@ public class Item {
             return true;
         }
     }
-    public boolean isValidId(String id) {
+    public static boolean isValidId(String id) {
         if (id.length() != 9) {
             return false;
         } else if (!id.matches("I\\d{3}-\\d{4}")) {
             return false;
         }
         return true;
+    }
+
+    public static boolean isRentalTypeValid(String rentalType) {
+        RentalType rental = convertRentalType(rentalType);
+
+        switch (rental) {
+            case dvd, game, record -> {
+                return true;
+            }
+        }
+        return false;
+    }
+    public static boolean isLoanTypeValid(String loanType) {
+        LoanType loan = convertLoanType(loanType);
+
+        switch (loan) {
+            case OneWeek, twoDays -> {
+                return true;
+            }
+        }
+        return false;
+    }
+    public static boolean isGenreValid(String genreType) {
+        Genre genre = convertGenre(genreType);
+
+        switch (genre) {
+            case action, horror, comedy, drama, NG -> {
+                return true;
+            }
+        }
+        return false;
     }
 }
