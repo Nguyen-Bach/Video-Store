@@ -1,6 +1,5 @@
 package com.example.videostore.controller;
 
-import com.example.videostore.AllAccount.admin;
 import com.example.videostore.ZApplication;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -14,8 +13,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.security.cert.X509Certificate;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.Scanner;
 
 public class LogInController implements Initializable {
 
@@ -39,6 +40,7 @@ public class LogInController implements Initializable {
             Scanner fileScanner = new Scanner(new File("src/main/resources/com/example/videostore/customers.txt"));
             while (fileScanner.hasNext()) {
                 List<String> account = Arrays.asList(fileScanner.nextLine().split(","));
+
                 String username = account.get(6);
                 String password = account.get(7);
 

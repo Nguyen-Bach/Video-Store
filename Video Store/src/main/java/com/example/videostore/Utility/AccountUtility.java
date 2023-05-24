@@ -2,7 +2,7 @@ package com.example.videostore.Utility;
 
 import com.example.videostore.AllAccount.Customer;
 
-public class AccountUtility {
+public class AccountUtility {   //not using this class
 
     public Customer convert(String string) {
         String list[] = string.split(",");
@@ -17,4 +17,8 @@ public class AccountUtility {
 
         return new Customer(id, username, password, address, phone, name, type, 0);
         }
+
+
+
+
 }
