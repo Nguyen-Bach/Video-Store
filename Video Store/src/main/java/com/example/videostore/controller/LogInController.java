@@ -20,6 +20,8 @@ import java.util.Scanner;
 
 public class LogInController implements Initializable {
 
+    private String usernameValid;
+
     @FXML
     private Button logInButton;
     @FXML
@@ -30,6 +32,7 @@ public class LogInController implements Initializable {
     private TextField passwordField;
     @FXML
     private Label wrongId;
+
 
     public void logInClick() throws IOException {
         String usernameInput = usernameField.getText().toString();
@@ -46,6 +49,7 @@ public class LogInController implements Initializable {
 
                 if (usernameInput.equals(username) && passwordInput.equals(password)) {
                     valid = true;
+                    usernameValid = usernameInput;
                 }
             }
             if (valid) {
@@ -77,6 +81,9 @@ public class LogInController implements Initializable {
         }
     }
 
+    public String getUsername() {
+        return usernameValid;
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

@@ -39,7 +39,7 @@
          </font>
       </Label>
       <TextField fx:id="idField" layoutX="357.0" layoutY="122.0" prefHeight="25.0" prefWidth="297.0" promptText="Ixxx-xxxx" />
-      <TextField fx:id="nameField" layoutX="357.0" layoutY="172.0" prefHeight="25.0" prefWidth="297.0" promptText="Title" />
+      <TextField fx:id="nameField" layoutX="357.0" layoutY="172.0" prefHeight="25.0" prefWidth="297.0" />
       <TextField fx:id="addressField" layoutX="357.0" layoutY="222.0" prefHeight="25.0" prefWidth="297.0" promptText=" " />
       <TextField fx:id="phoneField" layoutX="357.0" layoutY="272.0" prefHeight="25.0" prefWidth="297.0" />
       <TextField fx:id="usernameField" layoutX="357.0" layoutY="322.0" prefHeight="25.0" prefWidth="297.0" />
