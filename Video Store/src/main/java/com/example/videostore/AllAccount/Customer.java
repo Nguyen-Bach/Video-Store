@@ -148,9 +148,6 @@ public class Customer {
         return customers;
     }
 
-
-
-
     @Override
     public String toString() {
         return "Account{" +

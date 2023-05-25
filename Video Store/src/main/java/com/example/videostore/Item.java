@@ -1,8 +1,8 @@
 package com.example.videostore;
 
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +17,7 @@ public class Item {
     private LoanType loanType;
     private Genre genre;
 
-    private static ArrayList<Item> items = new ArrayList<>() {};
+    private static final ArrayList<Item> items = new ArrayList<>() {};
 
     public Item(String id,String title,RentalType rentalType, LoanType loanType, int numberOfCopies, double rentalFee, Genre genre) {
         this.id = id;
@@ -323,4 +323,5 @@ public class Item {
         }
         return false;
     }
+
 }
