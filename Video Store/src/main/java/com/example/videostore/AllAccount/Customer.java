@@ -2,6 +2,7 @@ package com.example.videostore.AllAccount;
 
 import com.example.videostore.Item;
 import com.example.videostore.ItemError;
+import com.example.videostore.controller.LogInController;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+
+import static com.example.videostore.Item.*;
 
 public class Customer {
     private String id;
@@ -18,9 +21,10 @@ public class Customer {
     private String username;
     private String password;
     private String type;
-    private ArrayList<Item> itemRented = new ArrayList<Item>();
+    private static ArrayList<Item> itemRented = new ArrayList<>();
     private static ArrayList<Customer> customers = new ArrayList<>();
     private int point = 0;
+
 
 
     public Customer(String id, String username, String password, String address, String phone, String name, String type, int point) {
@@ -123,6 +127,58 @@ public class Customer {
         } else {
             return true;
         }
+    }
+
+    public static ArrayList<Item> initializedItemRented() throws FileNotFoundException {
+        itemRented.clear();
+        ArrayList<String> idItems = new ArrayList<>();
+        int index = 0;
+        String idValid = LogInController.getIdValid();
+
+        Scanner scanCustomerFile = new Scanner(new File("src/main/resources/com/example/videostore/customers.txt"));
+        Scanner scanItemFile = new Scanner(new File("src/main/resources/com/example/videostore/items.txt"));
+
+        while (scanCustomerFile.hasNext()) {
+            List<String> account = Arrays.asList(scanCustomerFile.nextLine().split(","));
+
+            if (account.get(0).equals(idValid)) {
+                int n = 8;
+
+                while (n != account.size()) {
+                    idItems.add(account.get(n));
+                    n++;
+                }
+            }
+        }
+        while (scanItemFile.hasNext()) {
+            List<String> item = Arrays.asList(scanItemFile.nextLine().split(","));
+
+
+            if (index < idItems.size()) {
+                if (item.get(0).equals(idItems.get(index))) {
+
+                    String id = item.get(0);
+                    String title = item.get(1);
+
+                    String stringRentalType = item.get(2);
+                    Item.RentalType rentalType = Item.convertRentalType(stringRentalType);
+
+                    String stringLoanType = item.get(3);
+                    Item.LoanType loanType = Item.convertLoanType(stringLoanType);
+
+                    int numOfCopies = Integer.parseInt(item.get(4));
+                    double rentalFee = Double.parseDouble(item.get(5));
+
+                    String stringGenre = item.get(6);
+                    Item.Genre genre = Item.convertGenre(stringGenre);
+
+                    itemRented.add(new Item(id, title, rentalType, loanType, numOfCopies, rentalFee, genre));
+                    index++;
+                }
+            }
+
+        }
+        return itemRented;
     }
 
     public static ArrayList<Customer> initializeCustomer() throws FileNotFoundException {

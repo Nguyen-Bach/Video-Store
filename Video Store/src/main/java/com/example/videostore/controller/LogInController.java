@@ -20,7 +20,7 @@ import java.util.Scanner;
 
 public class LogInController implements Initializable {
 
-    private String usernameValid;
+    static String idValid;
 
     @FXML
     private Button logInButton;
@@ -44,12 +44,13 @@ public class LogInController implements Initializable {
             while (fileScanner.hasNext()) {
                 List<String> account = Arrays.asList(fileScanner.nextLine().split(","));
 
+                String id = account.get(0);
                 String username = account.get(6);
                 String password = account.get(7);
 
                 if (usernameInput.equals(username) && passwordInput.equals(password)) {
                     valid = true;
-                    usernameValid = usernameInput;
+                    idValid = id;
                 }
             }
             if (valid) {
@@ -81,8 +82,8 @@ public class LogInController implements Initializable {
         }
     }
 
-    public String getUsername() {
-        return usernameValid;
+    public static String getIdValid() {
+        return idValid;
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

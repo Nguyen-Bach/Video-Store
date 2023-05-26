@@ -184,22 +184,22 @@ public class Item {
         try {
             while (scanFile.hasNext()) {
 
-                List<String> account = Arrays.asList(scanFile.nextLine().split(","));
+                List<String> item = Arrays.asList(scanFile.nextLine().split(","));
 
 
-                String id = account.get(0);
-                String title = account.get(1);
+                String id = item.get(0);
+                String title = item.get(1);
 
-                String stringRentalType = account.get(2);
+                String stringRentalType = item.get(2);
                 Item.RentalType rentalType = convertRentalType(stringRentalType);
 
-                String stringLoanType = account.get(3);
+                String stringLoanType = item.get(3);
                 Item.LoanType loanType = convertLoanType(stringLoanType);
 
-                int numOfCopies = Integer.parseInt(account.get(4));
-                double rentalFee = Double.parseDouble(account.get(5));
+                int numOfCopies = Integer.parseInt(item.get(4));
+                double rentalFee = Double.parseDouble(item.get(5));
 
-                String stringGenre = account.get(6);
+                String stringGenre = item.get(6);
                 Item.Genre genre = convertGenre(stringGenre);
 
                 items.add(new Item(id, title, rentalType, loanType, numOfCopies, rentalFee, genre));
