@@ -48,7 +48,6 @@ public class AddCustomerController implements Initializable {
         String address = addressField.getText();
         String username = usernameField.getText();
         String password = passwordField.getText();
-        String idCheck;
         boolean error = false;
 
         if (!Customer.idValidAccount(id)) {

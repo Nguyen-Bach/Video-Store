@@ -22,6 +22,7 @@ public class Customer {
     private String password;
     private String type;
     private static ArrayList<Item> itemRented = new ArrayList<>();
+    private static ArrayList<Item> itemNotRented = new ArrayList<>();
     private static ArrayList<Customer> customers = new ArrayList<>();
     private int point = 0;
 
@@ -179,6 +180,58 @@ public class Customer {
 
         }
         return itemRented;
+    }
+
+    public static ArrayList<Item> initializeItemNotRented() throws FileNotFoundException {
+        itemNotRented.clear();
+        ArrayList<String> idItems = new ArrayList<>();
+        int index = 0;
+        String idValid = LogInController.getIdValid();
+
+        Scanner scanCustomerFile = new Scanner(new File("src/main/resources/com/example/videostore/customers.txt"));
+        Scanner scanItemFile = new Scanner(new File("src/main/resources/com/example/videostore/items.txt"));
+
+        while (scanCustomerFile.hasNext()) {
+            List<String> account = Arrays.asList(scanCustomerFile.nextLine().split(","));
+
+            if (account.get(0).equals(idValid)) {
+                int n = 8;
+
+                while (n != account.size()) {
+                    idItems.add(account.get(n));
+                    n++;
+                }
+            }
+        }
+        while (scanItemFile.hasNext()) {
+            List<String> item = Arrays.asList(scanItemFile.nextLine().split(","));
+
+
+            if (index < idItems.size()) {
+                if (!item.get(0).equals(idItems.get(index))) {
+
+                    String id = item.get(0);
+                    String title = item.get(1);
+
+                    String stringRentalType = item.get(2);
+                    Item.RentalType rentalType = Item.convertRentalType(stringRentalType);
+
+                    String stringLoanType = item.get(3);
+                    Item.LoanType loanType = Item.convertLoanType(stringLoanType);
+
+                    int numOfCopies = Integer.parseInt(item.get(4));
+                    double rentalFee = Double.parseDouble(item.get(5));
+
+                    String stringGenre = item.get(6);
+                    Item.Genre genre = Item.convertGenre(stringGenre);
+
+                    itemNotRented.add(new Item(id, title, rentalType, loanType, numOfCopies, rentalFee, genre));
+                    index++;
+                }
+            }
+
+        }
+        return itemNotRented;
     }
 
     public static ArrayList<Customer> initializeCustomer() throws FileNotFoundException {

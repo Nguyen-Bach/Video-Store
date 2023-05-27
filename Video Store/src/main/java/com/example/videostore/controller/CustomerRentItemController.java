@@ -23,9 +23,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class CustomerController implements Initializable {
+public class CustomerRentItemController implements Initializable {
     @FXML
-    private Button returnButton;
+    private Button itemButton;
     @FXML
     private Button logOutButton;
     @FXML
@@ -57,7 +57,7 @@ public class CustomerController implements Initializable {
         rentalFeeColumn.setCellValueFactory(new PropertyValueFactory<>("rentalFee"));
         genreColumn.setCellValueFactory(new PropertyValueFactory<>("Genre"));
 
-        ObservableList<Item> list = FXCollections.observableArrayList(Customer.initializedItemRented());
+        ObservableList<Item> list = FXCollections.observableArrayList(Customer.initializeItemNotRented());
 
         FilteredList<Item> filteredList = new FilteredList<>(list, b -> true);
         searchField.textProperty().addListener((observable, oldValue, newValue) ->
@@ -83,22 +83,18 @@ public class CustomerController implements Initializable {
         itemTableView.getColumns().addAll(idColumn, titleColumn, rentalTypeColumn, loanTypeColumn, rentalFeeColumn, genreColumn);
     }
 
+
+    public void itemButtonClick() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(ZApplication.class.getResource("CustomerItem.fxml"));
+        Stage stage = (Stage) itemButton.getScene().getWindow();
+        stage.setScene(new Scene(fxmlLoader.load()));
+    }
     public void logOut() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(ZApplication.class.getResource("LogInScreen.fxml"));
         Stage stage = (Stage) logOutButton.getScene().getWindow();
         stage.setScene(new Scene(fxmlLoader.load()));
     }
-    public void rentButtonClick() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(ZApplication.class.getResource("CustomerRentItem.fxml"));
-        Stage stage = (Stage) logOutButton.getScene().getWindow();
-        stage.setScene(new Scene(fxmlLoader.load()));
-    }
 
-    public void returnButtonClick() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(ZApplication.class.getResource("ReturnItem.fxml"));
-        Stage stage = (Stage) logOutButton.getScene().getWindow();
-        stage.setScene(new Scene(fxmlLoader.load()));
-    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {

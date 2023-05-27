@@ -12,23 +12,23 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.videostore.controller.CustomerController">
+<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.videostore.controller.CustomerRentItemController">
    <children>
       <HBox layoutY="-3.0" prefHeight="153.0" prefWidth="1000.0">
          <children>
             <Pane prefHeight="153.0" prefWidth="999.0" style="-fx-background-color: lightblue;">
                <children>
-                  <Button layoutX="630.0" layoutY="70.0" mnemonicParsing="false" text="Items">
+                  <Button fx:id="itemButton" layoutX="630.0" layoutY="70.0" mnemonicParsing="false" onAction="#itemButtonClick" text="Items">
                      <font>
                         <Font size="21.0" />
                      </font></Button>
-                  <Label layoutX="34.0" layoutY="48.0" text="Item Rented" textAlignment="CENTER">
+                  <Label layoutX="34.0" layoutY="48.0" text="Rent Item" textAlignment="CENTER">
                      <font>
                         <Font size="40.0" />
                      </font>
                   </Label>
                   <Button fx:id="logOutButton" layoutX="930.0" layoutY="15.0" mnemonicParsing="false" onAction="#logOut" text="Log out" />
-                  <Button fx:id="rentButton" layoutX="421.0" layoutY="70.0" mnemonicParsing="false" onAction="#rentButtonClick" prefHeight="46.0" prefWidth="79.0" text="Rent">
+                  <Button layoutX="421.0" layoutY="70.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="79.0" text="Rent">
                      <font>
                         <Font size="21.0" />
                      </font>
@@ -57,11 +57,6 @@
                         <Font size="17.0" />
                      </font>
                   </Label>
-                  <Button fx:id="returnButton" layoutX="820.0" layoutY="8.0" mnemonicParsing="false" onAction="#returnButtonClick" prefHeight="46.0" prefWidth="99.0" text="Return">
-                     <font>
-                        <Font size="21.0" />
-                     </font>
-                  </Button>
                </children>
             </Pane>
             <TableView fx:id="itemTableView" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
