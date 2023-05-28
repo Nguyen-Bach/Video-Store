@@ -27,9 +27,10 @@ public class ReturnItemController implements Initializable {
     public void returnButtonClick() throws IOException {
         String itemIdDelete = idTextField.getText();
         ArrayList<String> tempLines = new ArrayList<>();
+        ArrayList<String> tempLinesItem = new ArrayList<>();
         ArrayList<String> currentItem = new ArrayList<>();
         String userId = LogInController.getIdValid();
-        String deleteItem = new String();
+        String returnItem = new String();
 
         Scanner scanCustomerFile = new Scanner(new File("src/main/resources/com/example/videostore/customers.txt"));
 
@@ -37,13 +38,14 @@ public class ReturnItemController implements Initializable {
             List<String> account = Arrays.asList(scanCustomerFile.nextLine().split(","));
 
             if (account.get(0).equals(userId)) {
-                int n = 8;
+                int n = 9;
 
                 while (n != account.size()) {
                     currentItem.add(account.get(n));
 
                     if (account.get(n).equals(itemIdDelete)) {
-                        deleteItem = account.get(n);
+                        returnItem = account.get(n);
+                        break;
                     }
                     n++;
                 }
@@ -61,25 +63,51 @@ public class ReturnItemController implements Initializable {
             if (customerArrayList.get(0).equals(userId)) {
                 int x = 0;
                 while (x != customerArrayList.size()) {
-                    if (customerArrayList.get(x).equals(deleteItem)) {
+                    if (customerArrayList.get(x).equals(returnItem)) {
                         customerArrayList.remove(x);
                     }
                     x++;
                 }
                 String[] customerArray = customerArrayList.toArray(new String[0]);
-                String joined = String.join(",", customerArray);
-                tempLines.add(joined);
+                String joinedString = String.join(",", customerArray);
+                tempLines.add(joinedString);
             } else {
                 tempLines.add(line);
             }
         }
         scanCustomerFile2.close();
-
-        PrintWriter pw = new PrintWriter(new FileWriter("src/main/resources/com/example/videostore/customers.txt"));
+        PrintWriter printWriterCustomer = new PrintWriter(new FileWriter("src/main/resources/com/example/videostore/customers.txt"));
         for (String line : tempLines) {
-            pw.println(line);
+            printWriterCustomer.println(line);
         }
-        pw.close();
+        printWriterCustomer.close();
+
+        Scanner scanItemFile = new Scanner(new File("src/main/resources/com/example/videostore/items.txt"));
+        while (scanItemFile.hasNext()) {
+            String lineItem = scanItemFile.nextLine();
+            String[] itemString = lineItem.split(",");
+            List<String> itemList = Arrays.asList(itemString);
+            ArrayList<String> itemArrayList = new ArrayList<>(itemList);
+
+            if (itemArrayList.get(0).equals(returnItem)) {
+                int numberOfCopies = Integer.parseInt(itemArrayList.get(4));
+                numberOfCopies++;
+                itemArrayList.set(4, String.valueOf(numberOfCopies));
+                String[] itemArray = itemArrayList.toArray(new String[0]);
+                String joinedString = String.join(",", itemArray);
+
+                tempLinesItem.add(joinedString);
+            } else {
+                tempLinesItem.add(lineItem);
+            }
+        }
+        scanItemFile.close();
+        PrintWriter printWriterItem = new PrintWriter(new FileWriter("src/main/resources/com/example/videostore/items.txt"));
+        for (String line : tempLinesItem) {
+            printWriterItem.println(line);
+        }
+        printWriterItem.close();
+
         Customer.initializeCustomer();
         Customer.initializedItemRented();
         Customer.initializeItemNotRented();

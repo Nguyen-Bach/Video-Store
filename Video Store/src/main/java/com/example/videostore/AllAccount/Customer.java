@@ -6,12 +6,8 @@ import com.example.videostore.controller.LogInController;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
-
-import static com.example.videostore.Item.*;
+import java.text.CollationElementIterator;
+import java.util.*;
 
 public class Customer {
     private String id;
@@ -123,11 +119,7 @@ public class Customer {
     }
 
     public static boolean idValidAccount(String id) {
-        if (!id.matches("C\\d{3}")) {
-            return false;
-        } else {
-            return true;
-        }
+        return id.matches("C\\d{3}");
     }
 
     public static ArrayList<Item> initializedItemRented() throws FileNotFoundException {
@@ -143,7 +135,7 @@ public class Customer {
             List<String> account = Arrays.asList(scanCustomerFile.nextLine().split(","));
 
             if (account.get(0).equals(idValid)) {
-                int n = 8;
+                int n = 9;
 
                 while (n != account.size()) {
                     idItems.add(account.get(n));
@@ -151,6 +143,7 @@ public class Customer {
                 }
             }
         }
+        Collections.sort(idItems);
         while (scanItemFile.hasNext()) {
             List<String> item = Arrays.asList(scanItemFile.nextLine().split(","));
 
@@ -187,6 +180,7 @@ public class Customer {
         ArrayList<String> idItems = new ArrayList<>();
         int index = 0;
         String idValid = LogInController.getIdValid();
+        ArrayList<String> idItemNotRented = new ArrayList<>();
 
         Scanner scanCustomerFile = new Scanner(new File("src/main/resources/com/example/videostore/customers.txt"));
         Scanner scanItemFile = new Scanner(new File("src/main/resources/com/example/videostore/items.txt"));
@@ -195,7 +189,7 @@ public class Customer {
             List<String> account = Arrays.asList(scanCustomerFile.nextLine().split(","));
 
             if (account.get(0).equals(idValid)) {
-                int n = 8;
+                int n = 9;
 
                 while (n != account.size()) {
                     idItems.add(account.get(n));
@@ -203,12 +197,28 @@ public class Customer {
                 }
             }
         }
-        while (scanItemFile.hasNext()) {
-            List<String> item = Arrays.asList(scanItemFile.nextLine().split(","));
+        Collections.sort(idItems);
+        scanItemFile.close();
+
+        Scanner scanItemFileForItem = new Scanner(new File("src/main/resources/com/example/videostore/items.txt"));
+        while (scanItemFileForItem.hasNext()) {
+            List<String> item = Arrays.asList(scanItemFileForItem.nextLine().split(","));
+            idItemNotRented.add(item.get(0));
+        }
+        scanItemFileForItem.close();
+
+        idItemNotRented.removeAll(idItems);
+
+        Collections.sort(idItemNotRented);
+
+        index = 0;
+        Scanner scanItemNotRentedFile = new Scanner(new File("src/main/resources/com/example/videostore/items.txt"));
+        while (scanItemNotRentedFile.hasNext()) {
+            List<String> item = Arrays.asList(scanItemNotRentedFile.nextLine().split(","));
 
 
-            if (index < idItems.size()) {
-                if (!item.get(0).equals(idItems.get(index))) {
+            if (index < idItemNotRented.size()) {
+                if (item.get(0).equals(idItemNotRented.get(index))) {
 
                     String id = item.get(0);
                     String title = item.get(1);
@@ -231,6 +241,8 @@ public class Customer {
             }
 
         }
+        scanItemNotRentedFile.close();
+
         return itemNotRented;
     }
 
@@ -242,14 +254,15 @@ public class Customer {
                 List<String> account = Arrays.asList(scanFile.nextLine().split(","));
 
                 String id = account.get(0);
-                String username = account.get(6);
-                String password = account.get(7);
+                String username = account.get(7);
+                String password = account.get(8);
                 String address = account.get(2);
                 String phone = account.get(3);
                 String name = account.get(1);
                 String type = account.get(5);
+                int point = Integer.parseInt(account.get(6));
 
-                customers.add(new Customer(id, username, password, address, phone, name, type, 0));
+                customers.add(new Customer(id, username, password, address, phone, name, type, point));
             }
         } catch (Exception e) {
             System.out.println("no file found");

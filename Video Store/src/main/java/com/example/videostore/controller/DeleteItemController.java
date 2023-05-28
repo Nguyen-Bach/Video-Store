@@ -30,9 +30,9 @@ public class DeleteItemController implements Initializable {
     public void deleteButtonClick() throws IOException {
         String id = idTextField.getText();
         ArrayList<String> tempLines = new ArrayList<>();
-        Scanner scanFile = new Scanner(new File("src/main/resources/com/example/videostore/items.txt"));
-        while (scanFile.hasNext()) {
-            String line = scanFile.nextLine();
+        Scanner scanItemFile = new Scanner(new File("src/main/resources/com/example/videostore/items.txt"));
+        while (scanItemFile.hasNext()) {
+            String line = scanItemFile.nextLine();
             String[] item = line.split(",");
 
             if (item[0].equals(id)) {
@@ -41,7 +41,7 @@ public class DeleteItemController implements Initializable {
                 tempLines.add(line);
             }
         }
-        scanFile.close();
+        scanItemFile.close();
 
         PrintWriter pw = new PrintWriter(new FileWriter("src/main/resources/com/example/videostore/items.txt"));
         for (String line: tempLines){

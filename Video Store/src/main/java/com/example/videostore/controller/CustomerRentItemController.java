@@ -25,6 +25,8 @@ import java.util.ResourceBundle;
 
 public class CustomerRentItemController implements Initializable {
     @FXML
+    private Button rentButton;
+    @FXML
     private Button itemButton;
     @FXML
     private Button logOutButton;
@@ -54,6 +56,7 @@ public class CustomerRentItemController implements Initializable {
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("Title"));
         rentalTypeColumn.setCellValueFactory(new PropertyValueFactory<>("rentalType"));
         loanTypeColumn.setCellValueFactory(new PropertyValueFactory<>("loanType"));
+        numberOfCopiesColumn.setCellValueFactory(new PropertyValueFactory<>("numberOfCopies"));
         rentalFeeColumn.setCellValueFactory(new PropertyValueFactory<>("rentalFee"));
         genreColumn.setCellValueFactory(new PropertyValueFactory<>("Genre"));
 
@@ -80,7 +83,8 @@ public class CustomerRentItemController implements Initializable {
         sortedData.comparatorProperty().bind(itemTableView.comparatorProperty());
 
         itemTableView.setItems(sortedData);
-        itemTableView.getColumns().addAll(idColumn, titleColumn, rentalTypeColumn, loanTypeColumn, rentalFeeColumn, genreColumn);
+        itemTableView.getColumns().addAll(idColumn, titleColumn, rentalTypeColumn, loanTypeColumn,
+                numberOfCopiesColumn, rentalFeeColumn, genreColumn);
     }
 
 
@@ -92,6 +96,12 @@ public class CustomerRentItemController implements Initializable {
     public void logOut() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(ZApplication.class.getResource("LogInScreen.fxml"));
         Stage stage = (Stage) logOutButton.getScene().getWindow();
+        stage.setScene(new Scene(fxmlLoader.load()));
+    }
+
+    public void rentButtonClick() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(ZApplication.class.getResource("RentItem.fxml"));
+        Stage stage = (Stage) rentButton.getScene().getWindow();
         stage.setScene(new Scene(fxmlLoader.load()));
     }
 

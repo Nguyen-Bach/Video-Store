@@ -34,9 +34,9 @@ public class DeleteCustomerController implements Initializable {
     public void deleteButtonClick() throws IOException {
         String id = idTextField.getText();
         ArrayList<String> tempLines = new ArrayList<>();
-        Scanner scanFile = new Scanner(new File("src/main/resources/com/example/videostore/customers.txt"));
-        while (scanFile.hasNext()) {
-            String line = scanFile.nextLine();
+        Scanner scanCustomerFile = new Scanner(new File("src/main/resources/com/example/videostore/customers.txt"));
+        while (scanCustomerFile.hasNext()) {
+            String line = scanCustomerFile.nextLine();
             String[] customer = line.split(",");
 
             if (customer[0].equals(id)) {
@@ -45,7 +45,7 @@ public class DeleteCustomerController implements Initializable {
                 tempLines.add(line);
             }
         }
-        scanFile.close();
+        scanCustomerFile.close();
 
         PrintWriter pw = new PrintWriter(new FileWriter("src/main/resources/com/example/videostore/customers.txt"));
         for (String line: tempLines){

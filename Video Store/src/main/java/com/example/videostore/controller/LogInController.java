@@ -22,6 +22,8 @@ public class LogInController implements Initializable {
 
     static String idValid;
 
+    static String customerType;
+
     @FXML
     private Button logInButton;
     @FXML
@@ -35,8 +37,8 @@ public class LogInController implements Initializable {
 
 
     public void logInClick() throws IOException {
-        String usernameInput = usernameField.getText().toString();
-        String passwordInput = passwordField.getText().toString();
+        String usernameInput = usernameField.getText();
+        String passwordInput = passwordField.getText();
         boolean valid = false;
 
         try {
@@ -45,12 +47,14 @@ public class LogInController implements Initializable {
                 List<String> account = Arrays.asList(fileScanner.nextLine().split(","));
 
                 String id = account.get(0);
-                String username = account.get(6);
-                String password = account.get(7);
+                String username = account.get(7);
+                String password = account.get(8);
+                String type = account.get(5);
 
                 if (usernameInput.equals(username) && passwordInput.equals(password)) {
                     valid = true;
                     idValid = id;
+                    customerType = type;
                 }
             }
             if (valid) {
@@ -80,6 +84,10 @@ public class LogInController implements Initializable {
         if(alert.showAndWait().get() == ButtonType.OK) {
             Platform.exit();
         }
+    }
+
+    public static String getCustomerType() {
+        return customerType;
     }
 
     public static String getIdValid() {

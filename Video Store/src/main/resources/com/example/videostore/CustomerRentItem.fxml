@@ -57,6 +57,11 @@
                         <Font size="17.0" />
                      </font>
                   </Label>
+                  <Button fx:id="rentButton" layoutX="843.0" layoutY="7.0" mnemonicParsing="false" onAction="#rentButtonClick" prefHeight="46.0" prefWidth="79.0" text="Rent">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </Button>
                </children>
             </Pane>
             <TableView fx:id="itemTableView" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />

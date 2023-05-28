@@ -132,6 +132,7 @@ public class Item {
     }
 
     // ///////////////////////////////////////
+
     public String getTitle() {
         return title;
     }
@@ -209,19 +210,6 @@ public class Item {
             throw new RuntimeException(e);
         }
         return items;
-    }
-
-    public void increaseNumberOfCopies(int n) throws ItemError{
-        if (n <= 0) {
-            throw new ItemError("invalid number");
-        }
-        this.numberOfCopies += n;
-    }
-    public void decreaseNumberOfCopies() throws ItemError {
-        if (this.numberOfCopies == 0) {
-            throw new ItemError("there is no stock for this item");
-        }
-        this.numberOfCopies--;
     }
 
     public static Item.RentalType convertRentalType(String rentalType) {
