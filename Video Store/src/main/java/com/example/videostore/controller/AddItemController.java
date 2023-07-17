@@ -49,6 +49,9 @@ public class AddItemController implements Initializable {
         String genre = genreField.getText();
 
         boolean error = false;
+        if (id == null) {
+            error = true;
+        }
 
         if (!Item.isValidId(id)) {
             error = true;
@@ -96,7 +99,7 @@ public class AddItemController implements Initializable {
         if (error) {
             errorLabel.setText("Something is wrong with your input");
         } else {
-           errorLabel.setText("");
+           errorLabel.setText("Successfully added");
            PrintWriter pw = new PrintWriter(new FileWriter("src/main/resources/com/example/videostore/items.txt",
                    true));
            pw.println(id + "," + title + "," + rentType + "," + loanType + ","

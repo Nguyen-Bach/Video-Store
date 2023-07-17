@@ -129,7 +129,7 @@ public class RentItemController implements Initializable {
             pwItem.close();
             noItemLabel.setText("Item successfully rented");
             noItemLabel.setTextFill(Color.GREEN);
-        } else if (!inStock && itemExits && canRent) {
+        } else if (!inStock && canRent) {
             noItemLabel.setText("item is not in stock");
         } else if (duplicate) {
             noItemLabel.setText("you can not rent an item twice");

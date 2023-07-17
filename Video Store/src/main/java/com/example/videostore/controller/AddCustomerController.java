@@ -86,7 +86,7 @@ public class AddCustomerController implements Initializable {
             PrintWriter pw = new PrintWriter(new FileWriter("src/main/resources/com/example/videostore/customers.txt",
                     true));
             pw.println(id + "," + name + "," + address + "," + phone
-                    + "," + "0" + "," + "Guest" + "," + username + "," + password);
+                    + "," + "0" + "," + "Guest" + "," + "0" + username + "," + password);
             pw.close();
         }
         Customer.initializeCustomer();

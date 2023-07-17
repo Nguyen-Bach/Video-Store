@@ -146,8 +146,6 @@ public class Customer {
         Collections.sort(idItems);
         while (scanItemFile.hasNext()) {
             List<String> item = Arrays.asList(scanItemFile.nextLine().split(","));
-
-
             if (index < idItems.size()) {
                 if (item.get(0).equals(idItems.get(index))) {
 

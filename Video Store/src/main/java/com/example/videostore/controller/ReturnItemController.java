@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -15,7 +16,8 @@ import java.net.URL;
 import java.util.*;
 
 public class ReturnItemController implements Initializable {
-
+    @FXML
+    private Label returnableLabel;
     @FXML
     private TextField idTextField;
     @FXML
@@ -31,6 +33,7 @@ public class ReturnItemController implements Initializable {
         ArrayList<String> currentItem = new ArrayList<>();
         String userId = LogInController.getIdValid();
         String returnItem = new String();
+        boolean returnable = false;
 
         Scanner scanCustomerFile = new Scanner(new File("src/main/resources/com/example/videostore/customers.txt"));
 
@@ -45,6 +48,7 @@ public class ReturnItemController implements Initializable {
 
                     if (account.get(n).equals(itemIdDelete)) {
                         returnItem = account.get(n);
+                        returnable = true;
                         break;
                     }
                     n++;
@@ -52,6 +56,12 @@ public class ReturnItemController implements Initializable {
             }
         }
         scanCustomerFile.close();
+
+        if (returnable) {
+            returnableLabel.setText("Successful");
+        } else {
+            returnableLabel.setText("Invalid Id");
+        }
 
         Scanner scanCustomerFile2 = new Scanner(new File("src/main/resources/com/example/videostore/customers.txt"));
         while (scanCustomerFile2.hasNext()) {
@@ -62,9 +72,10 @@ public class ReturnItemController implements Initializable {
 
             if (customerArrayList.get(0).equals(userId)) {
                 int x = 0;
-                while (x != customerArrayList.size()) {
+                while (x <= customerArrayList.size()) {
                     if (customerArrayList.get(x).equals(returnItem)) {
                         customerArrayList.remove(x);
+                        break;
                     }
                     x++;
                 }
